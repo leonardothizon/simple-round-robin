@@ -13,16 +13,19 @@ public class CPU {
 	}
 
 	public long process(Processo p) {
-		System.out.println("Processando "+ p.getId());
+		System.out.print("Processando #"+ p.getId() +" (Tamanho= "+ p.getSize() +")...");
 		long burst = p.getBurstTime() - timeQuantum;
-		System.out.println("Restante: "+ burst);
-		if(burst >= 0) {
+		
+		if(burst < 0) {
+			System.out.print(" Burst Time = 0");
+			p.setBurstTime(0);
+			return burst;
+		} else {
+			System.out.print(" Burst Time = "+ burst);
 			p.setBurstTime(burst);			
 			return 0;
-		} else {
-			p.setBurstTime(0);
-			return burst * -1;
 		}
+		
 	}
 
 }

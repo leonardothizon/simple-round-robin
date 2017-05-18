@@ -50,7 +50,10 @@ public class Control {
 				timeSlace++;
 				
 				long remain = cpu.process(p);
-				elapsed += remain + cpu.getTimeQuantum();
+				if(remain < 0)
+					elapsed += remain + cpu.getTimeQuantum();
+				else
+					elapsed += cpu.getTimeQuantum();
 				
 				if(p.getBurstTime() > 0)
 					processes.add(p);
@@ -60,7 +63,10 @@ public class Control {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("Processos restantes: "+ processes.size());
+				
+				System.out.println();
+				System.out.println(" Processos restantes: "+ processes.size() +" ");
+				System.out.println();
 			
 			} else {
 				processes.add(p);
