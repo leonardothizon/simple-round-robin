@@ -14,6 +14,7 @@ public class Control {
 	 * Elapsed time 
 	 */
 	private long elapsed = 0;
+	private long timeSlace = 1;
 	
 	private static long sequenceID = 0;
 	public static long getSequence() {
@@ -38,22 +39,32 @@ public class Control {
 	
 	public void run() {
 		
+		
 		while(processes.size() > 0) {
 			
+				
 			Processo p = processes.poll();
 			
-			long remain = cpu.process(p);
-			elapsed += remain + cpu.getTimeQuantum();
+			if(p.getArrivalTime() <= timeSlace) {
 			
-			if(p.getBurstTime() > 0)
+				timeSlace++;
+				
+				long remain = cpu.process(p);
+				elapsed += remain + cpu.getTimeQuantum();
+				
+				if(p.getBurstTime() > 0)
+					processes.add(p);
+				
+				try {
+					Thread.sleep(500);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("Processos restantes: "+ processes.size());
+			
+			} else {
 				processes.add(p);
-			
-			try {
-				Thread.sleep(500);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-			System.out.println("Processos restantes: "+ processes.size());
 			
 		}
 		
