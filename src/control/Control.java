@@ -39,9 +39,7 @@ public class Control {
 	
 	public void run() {
 		
-		
 		while(processes.size() > 0) {
-			
 				
 			Processo p = processes.poll();
 			
