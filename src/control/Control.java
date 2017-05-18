@@ -39,20 +39,23 @@ public class Control {
 	
 	public void run() {
 		
-		while(processes.size() > 0) {
+		while(processes.size() > 0) { //enquanto existirem processos na fila
 				
-			Processo p = processes.poll();
+			Processo p = processes.poll(); // pega o primeiro da fila
 			
-			if(p.getArrivalTime() <= timeSlace) {
+			if(p.getArrivalTime() <= timeSlace) { // se é o arrivaltime do processo
 			
 				timeSlace++;
 				
 				long remain = cpu.process(p);
+				
+				// verifica se burst time do processo era menor do que o quantum time da CPU
 				if(remain < 0)
 					elapsed += remain + cpu.getTimeQuantum();
 				else
 					elapsed += cpu.getTimeQuantum();
 				
+				// caso não tenha terminado, coloca o processo no final da fila
 				if(p.getBurstTime() > 0)
 					processes.add(p);
 				
