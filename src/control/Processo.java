@@ -11,6 +11,7 @@ public class Processo {
 	
 	public Processo(long size, int arrivalTime) {
 		this.size = size;
+		this.burstTime = this.size;
 		this.arrivalTime = arrivalTime;
 		this.id = Control.getSequence();
 	}
@@ -35,19 +36,12 @@ public class Processo {
 		return burstTime;
 	}
 	
-	public int getArrivalTime() {
-		return arrivalTime;
+	public void setBurstTime(long burstTime) {
+		this.burstTime = burstTime;
 	}
 
-	public long execute(long time) {
-		long burst = burstTime - time;
-		if(burst >= 0) {
-			burstTime = burst ;			
-			return 0;
-		} else {
-			burstTime = 0;
-			return burst * -1;
-		}
+	public int getArrivalTime() {
+		return arrivalTime;
 	}
 
 }

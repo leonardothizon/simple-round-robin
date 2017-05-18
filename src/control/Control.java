@@ -45,13 +45,15 @@ public class Control {
 			long remain = cpu.process(p);
 			elapsed += remain + cpu.getTimeQuantum();
 			
-			processes.add(p);
+			if(p.getBurstTime() > 0)
+				processes.add(p);
 			
 			try {
 				Thread.sleep(500);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			System.out.println("Processos restantes: "+ processes.size());
 			
 		}
 		
